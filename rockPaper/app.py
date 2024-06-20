@@ -29,7 +29,8 @@ def index():
     result = request.args.get('result')
     com_choice = request.args.get('com_choice')
     your_choice = request.args.get('your_choice')
-    return render_template('index.html', result=result, com_choice=com_choice, your_choice=your_choice)
+    celeb = request.args.get('celeb')
+    return render_template('index.html', result=result, com_choice=com_choice, your_choice=your_choice, celeb=celeb)
 
 @app.route('/play/<choice>', methods=['GET', 'POST'])
 def play(choice):
@@ -44,12 +45,15 @@ def play(choice):
 
     if game_result is None:
         result = "It's a tie!"
+        celeb = "confeti"
     elif game_result:
         result = "You win!"
+        celeb = "confeti"
     else:
         result = "You lose!"
+        celeb = "confeti1"
 
-    return redirect(url_for('index', result=result, com_choice=com_choice, your_choice=your_choice) + '#rock')
+    return redirect(url_for('index', result=result, com_choice=com_choice, your_choice=your_choice, celeb=celeb) + '#rock')
 
 
 
