@@ -1,38 +1,123 @@
 <!DOCTYPE HTML>
 <html>
-<head>
+  <head>
     <title>Rock Paper Scissors</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+
     <link rel="stylesheet" href="static/assets/css/main.css" />
     <noscript><link rel="stylesheet" href="static/assets/css/noscript.css" /></noscript>
-	<style>
-		.column {
-			float: left;
-			width: 33.33%;
-			padding: 5px;
-			margin-left: 20px;
-			}
+    <!-- Favicons -->
+    <link href="static/images/favicon.ico" rel="icon" type="image/x-icon">
+    <link href="static/images/apple-touch-icon.png" rel="apple-touch-icon">
+    <style>
+        .column {
+            float: left;
+            width: 33.33%;
+            padding: 5px;
+            margin-left: 20px;
+        }
 
-			/* Clear floats after image containers */
-			.row::after {
-			content: "";
-			clear: both;
-			display: table;
-			}
+        /* Clear floats after image containers */
+        .row::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
 
-            .buttons {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                margin: 10px;
+        .buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            color: white;
+            font-size: 1.2em;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        nav ul li {
+            flex: 1;
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                gap: 5px;
             }
 
-            canvas {
-                width:100%;
-                height:100%;
-                }
-	</style>
+            .buttons {
+                width: 100%;
+                margin: 5px 0;
+            }
+        }
+
+        #bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 1;
+            background-image: url("static/images/pic01.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+
+        #bg:before, #bg:after {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #bg:before {
+            transition: background-color 2.5s ease-in-out;
+            transition-delay: 0.75s;
+            background-image: linear-gradient(to top, rgba(19, 21, 25, 0.5), rgba(19, 21, 25, 0.5)), url("static/images/overlay.png");
+            background-size: auto, 256px 256px;
+            background-position: center, center;
+            background-repeat: no-repeat, repeat;
+            z-index: 2;
+        }
+
+        #bg:after {
+            transform: scale(1.125);
+            transition: transform 0.325s ease-in-out, filter 0.325s ease-in-out;
+            z-index: 1;
+        }
+
+        body.is-article-visible #bg:after {
+            transform: scale(1.0825);
+            filter: blur(0.2rem);
+        }
+
+        body.is-preload #bg:before {
+            background-color: #000000;
+        }
+    </style>
 </head>
 <body class="is-preload">
 
@@ -95,24 +180,7 @@
     <script src="static/assets/js/util.js"></script>
     <script src="static/assets/js/main.js"></script>
     <script>
-         /*******************************************************************
  
- ========= CONFETTI JAVASCRIPT  ========= 
- =========      BY TRELLO       =========
- 
- As seen on https://trello.com/10million
- _______________________________________
- 
- Copyright © Trello. All rights Reserved.
-  _______________________________________
- 
- XXX Use for Educational Purposes only XXX
- 
- I will not be liable for any damages or legal actions for Using of this material.
- 
- *******************************************************************/
-
-
 
  var COLORS, Confetti, NUM_CONFETTI, PI_2, canvas, confetti, context, drawCircle, drawCircle2, drawCircle3, i, range, xpos;
  NUM_CONFETTI = 40;
